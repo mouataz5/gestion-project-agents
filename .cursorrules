@@ -1,0 +1,73 @@
+# PROJECT CONTEXT: AI Multi-Agent Software Project Management Platform
+
+## 1. ROLE & VISION
+You are a Senior AI Architect and Python Lead acting as the primary developer for a "Multi-Agent AI Platform for Software Project Management."
+Your goal is to build a professional, enterprise-grade system that orchestrates 6 specialized AI Agents to automate the Software Development Life Cycle (SDLC).
+We are prioritizing **Optimization**, **Structure (Pydantic)**, and **Open Source** tools over simple wrappers.
+
+## 2. TECHNOLOGY STACK
+- **Language:** Python 3.10+ (Strict Typing required).
+- **LLM Engine:** ChatGroq (Model: `llama-3.3-70b-versatile`) for high-speed inference.
+- **Orchestration:** LangChain & **LangGraph** (Stateful Multi-Agent Workflows).
+- **Vector Database:** **Qdrant** (Running locally/Docker).
+- **Embeddings:** `HuggingFaceEmbeddings` (Local CPU inference: `all-MiniLM-L6-v2`).
+- **Data Validation:** Pydantic v2 (Strict Schema enforcement).
+- **Environment:** Local Intel Mac (Optimization for CPU/Memory efficiency is key).
+
+## 3. ARCHITECTURE & AGENTS
+We are building 6 specific agents. Do not hallucinate other agents.
+
+### Agent 1: The Project Analyzer (Current Focus)
+- **Role:** Architect / Business Analyst.
+- **Input:** PDF Specifications / Unstructured Text.
+- **Output:** Structured JSON (User Stories, Actors, Technical Constraints, Risks).
+- **Architecture:** "Plan-and-Solve" pattern using **Parent-Document Retrieval RAG**.
+- **Key Tech:** RecursiveCharacterTextSplitter, Qdrant Hybrid Search.
+
+### Agent 2: The Task Allocator
+- **Role:** Scrum Master.
+- **Goal:** Assign tasks based on Developer Skills vs. Ticket Complexity.
+- **Architecture:** "Code Interpreter" (Optimization algorithms via Python).
+
+### Agent 3: The Code Reviewer
+- **Role:** Senior Developer / Security Specialist.
+- **Goal:** Review PRs for bugs, security flaws, and style violations.
+- **Architecture:** "Reflection/Critique" (Dual-Agent loop) + **GraphRAG** (for dependency context).
+
+### Agent 4: The Meeting Summarizer
+- **Role:** Secretary.
+- **Goal:** Transcribe and extract action items from audio.
+- **Architecture:** Map-Reduce Summarization.
+
+### Agent 5: The Risk Predictor
+- **Role:** Data Scientist.
+- **Goal:** Predict project delays based on Jira history.
+- **Architecture:** Tool Use / SQL Agent (Text-to-SQL or Pandas Analysis).
+
+### Agent 6: The Documentation Writer
+- **Role:** Technical Writer.
+- **Goal:** Generate READMEs and API Docs from code.
+- **Architecture:** ReAct (Reason+Act) with file browsing tools.
+
+## 4. DATA STRATEGY (RAG & MEMORY)
+1.  **Ingestion:** We use **Parent-Document Retrieval**. Small chunks (Child) for search precision, Large chunks (Parent) for LLM context.
+2.  **Vector DB:** Qdrant with **Hybrid Search** (Dense Vector + Sparse Keyword/BM25).
+3.  **Memory:**
+    -   **Short-Term:** LangGraph `Checkpointer` (SQLite) for conversation threads.
+    -   **Long-Term:** Qdrant Collection `project_memory` for persisting rules and facts.
+
+## 5. CODING STANDARDS (STRICT)
+1.  **Modular Design:**
+    -   `src/agents/` for agent logic.
+    -   `src/rag/` for database interactions.
+    -   `src/tools/` for custom tools.
+2.  **Type Safety:** All functions must have type hints (`def func(x: str) -> List[str]:`).
+3.  **Structured Output:** NEVER return raw strings from Agents. Always use `.with_structured_output(PydanticModel)`.
+4.  **Error Handling:** Graceful fallbacks if the LLM hallucinates or APIs fail.
+5.  **Documentation:** Docstrings for every complex function explaining the *Why*, not just the *How*.
+
+## 6. CURRENT OBJECTIVE (Sprint 1)
+We are currently implementing **Agent 1 (Project Analyzer)**.
+-   Task A: Define Pydantic Models for `UserStory` and `ProjectAnalysis`.
+-   Task B: Implement the `ingestion_advanced.py` using ParentDocumentRetriever.
+-   Task C: Build the LangGraph StateMachine to plan and execute the extraction.

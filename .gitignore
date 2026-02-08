@@ -1,0 +1,32 @@
+# Environment & secrets
+.venv/
+venv/
+.env
+.env.local
+*.env
+
+# Qdrant local data
+qdrant_data/
+
+# Agent output
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
