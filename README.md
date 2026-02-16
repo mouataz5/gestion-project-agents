@@ -17,7 +17,7 @@ AI agents for project management: analysis, allocation, review, summarization, r
 
 1. **Clone and venv**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/gestion-project-agents.git
+   git clone https://github.com/mouataz5/gestion-project-agents.git
    cd gestion-project-agents
    python3 -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
    pip install -r requirements.txt
