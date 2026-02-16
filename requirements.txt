@@ -30,3 +30,10 @@ pydantic>=2.0.0
 
 # Optional: env vars from .env
 python-dotenv>=1.0.0
+
+# PostgreSQL + pgvector data layer
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+pgvector>=0.2.0
+faker>=22.0.0
+pandas>=2.0.0

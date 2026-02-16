@@ -1,0 +1,33 @@
+# PostgreSQL + pgvector data layer for Gestion of Project Agents
+# Run: docker compose up -d
+# To avoid conflicting with other projects: docker compose -p agentdata up -d
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: agent_platform_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: agent_platform
+    ports:
+      - "5433:5432"   # host 5433 to avoid conflict with existing Postgres on 5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d agent_platform"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: agent_platform_pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      db:
+        condition: service_healthy

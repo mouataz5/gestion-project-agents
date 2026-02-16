@@ -58,6 +58,23 @@ Flow: index child chunks in Qdrant; store parent docs in a docstore (e.g. `InMem
 
 ---
 
+### 4.1 Agent 3: AST-Aware RAG (Structure-based Splitting)
+
+We do **not** use standard character-based chunking for code. Arbitrary 500-character chunks make the reviewer see a function without knowing which class it belongs to or which files call it (“spooky action at a distance”).
+
+**Chosen approach (Sprint 1 — “Repo Map”):**
+
+- **AST-aware RAG (structure-based splitting).** We split code by **functions and classes** (semantic units), not by character count.
+- **Tooling:** Python’s built-in `ast` module to parse each `.py` file; we derive one chunk per top-level function and per top-level class (or per method if we need finer granularity). Optional: `langchain_text_splitters.Language.PYTHON` with `RecursiveCharacterTextSplitter.from_language()` for language-aware boundaries.
+- **Metadata in Qdrant:** Every chunk carries `file`, `file_path`, `class`, `function`, and **imports** (list of imported modules/symbols). This lets the retriever and the LLM know where the code lives and how files relate (e.g. “this file imports `database`”).
+- **Result:** Agent 3 can reason about “this function is in class X” and “file A imports file B,” reducing isolated-snippet reviews and enabling logic-aware feedback.
+
+**Future (Sprint 2 — full GraphRAG):** Move to a true dependency graph (e.g. Microsoft GraphRAG or Neo4j) for deep “who calls what” and “who inherits from what” queries. For now, structure-based chunks + import metadata in Qdrant is the senior-engineer compromise.
+
+**Location:** `src/rag/code_ingestion.py` — `ingest_code_directory()` uses AST-derived chunks and metadata.
+
+---
+
 ## 5. Agent Flow (LangGraph)
 
 Agent 1 is a **plan-and-solve** graph with three logical steps:

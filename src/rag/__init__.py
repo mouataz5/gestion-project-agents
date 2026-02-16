@@ -1,1 +1,1 @@
-"""RAG ingestion and retrieval for Agent 1 (Project Analyzer)."""
+"""RAG: Agent 1 (ingestion_advanced), Agent 3 (code_ingestion), Agent 5 (agent5_ingestion)."""

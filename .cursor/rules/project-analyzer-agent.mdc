@@ -1,0 +1,20 @@
+---
+description: Gestion of Project Agents — stack, structure, and conventions
+alwaysApply: true
+---
+
+# Gestion of Project Agents — Cursor Context
+
+You are working on **Gestion of Project Agents**. The first agent is **Agent 1 (Project Analyzer)**: it ingests project-spec PDFs and outputs structured analysis (actors, user stories, technical constraints, risks) as Pydantic JSON.
+
+## Tech stack
+- **Framework:** LangGraph. **LLM:** ChatGroq (Llama-3-70B). **Vector DB:** Qdrant. **State:** SQLite. **Validation:** Pydantic v2.
+- **RAG:** ParentDocumentRetriever (child 400 / parent 2000 chars), HuggingFaceEmbeddings, Qdrant.
+
+## Rules
+1. Use Pydantic for all structured LLM output; prefer `.with_structured_output(ProjectAnalysis)` for the final analysis.
+2. Use Python 3.10+ and type hints everywhere.
+3. In LangGraph: keep State, Nodes, and Graph logic separate and clear.
+4. RAG lives in `src/rag/ingestion_advanced.py`; agent models in `src/agents/agent1/models.py`, graph in `src/agents/agent1/graph.py`.
+
+For full architecture, data models, and file layout, read `PROJECT_CONTEXT.md` (or use @PROJECT_CONTEXT.md).

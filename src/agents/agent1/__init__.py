@@ -2,6 +2,7 @@
 
 from .models import (
     Actor,
+    KeyTerm,
     Priority,
     ProjectAnalysis,
     TechnicalConstraint,
@@ -11,6 +12,7 @@ from .graph import build_graph, run_agent1
 
 __all__ = [
     "Actor",
+    "KeyTerm",
     "Priority",
     "ProjectAnalysis",
     "TechnicalConstraint",

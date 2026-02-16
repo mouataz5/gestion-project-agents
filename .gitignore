@@ -1,12 +1,16 @@
-# Environment & secrets
+# Environment & secrets (keep .env.example for setup)
 .venv/
 venv/
 .env
 .env.local
-*.env
+.env.*
+!.env.example
 
 # Qdrant local data
 qdrant_data/
+
+# PostgreSQL data (docker volume)
+postgres_data/
 
 # Agent output
 out/
