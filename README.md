@@ -36,10 +36,10 @@ flowchart LR
     MEET[🎙️ Meeting transcript] --> A4[Agent 4<br/>Meeting Summarizer]
 
     Q[(Qdrant<br/>vector store)]
-    A1 <-. spec RAG .-> Q
-    A3 <-. code RAG .-> Q
-    A4 <-. project context .-> Q
-    A5 <-. optional RAG .-> Q
+    A1 -. spec RAG .- Q
+    A3 -. code RAG .- Q
+    A4 -. project context .- Q
+    A5 -. optional RAG .- Q
 
     A1 & A2 & A3 & A4 & A5 & A6 --> OUT[📦 Validated JSON<br/>out/*.json]
 ```
